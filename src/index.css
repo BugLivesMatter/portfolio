@@ -1,0 +1,275 @@
+@import "tailwindcss";
+
+/* ─── Design tokens (Tailwind v4 @theme) ─────────────────────────── */
+@theme {
+  --color-base:    #0a0a0a;
+  --color-panel:   #0d0d0d;
+  --color-card:    #141414;
+  --color-line:    #1c1c1c;
+  --color-stroke:  #2c2c2c;
+  --color-ink:     #efefef;
+  --color-muted:   #888888;
+  --color-dim:     #555555;
+  --color-faint:   #333333;
+  --color-ghost:   #1e1e1e;
+  --color-mark:    #ffffff;
+  --color-on-mark: #000000;
+}
+
+/* ─── Light theme overrides ──────────────────────────────────────── */
+[data-theme="light"] {
+  --color-base:    #f5f5f5;
+  --color-panel:   #eeeeee;
+  --color-card:    #e4e4e4;
+  --color-line:    #d4d4d4;
+  --color-stroke:  #b8b8b8;
+  --color-ink:     #111111;
+  --color-muted:   #777777;
+  --color-dim:     #999999;
+  --color-faint:   #bbbbbb;
+  --color-ghost:   #d4d4d4;
+  --color-mark:    #111111;
+  --color-on-mark: #f5f5f5;
+}
+
+/* ─── Non-theme runtime vars ──────────────────────────────────────── */
+:root {
+  --outline-color:  rgba(255, 255, 255, 0.12);
+  --glow-bg:        rgba(255, 255, 255, 0.04);
+  --particle-rgb:   255, 255, 255;
+  --scanline-color: rgba(255, 255, 255, 0.03);
+}
+
+[data-theme="light"] {
+  --outline-color:  rgba(0, 0, 0, 0.12);
+  --glow-bg:        rgba(0, 0, 0, 0.04);
+  --particle-rgb:   20, 20, 20;
+  --scanline-color: rgba(0, 0, 0, 0.02);
+}
+
+/* ─── Reset & Base ───────────────────────────────────────────────── */
+* { cursor: none !important; }
+
+@media (hover: none) {
+  * { cursor: auto !important; }
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--color-base);
+  color: var(--color-ink);
+  font-family: "Inter", sans-serif;
+  overflow-x: hidden;
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-base); }
+::-webkit-scrollbar-thumb { background: var(--color-line); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-stroke); }
+
+::selection {
+  background: var(--color-ink);
+  color: var(--color-base);
+}
+
+/* Focus visible for keyboard nav */
+:focus-visible {
+  outline: 1px solid var(--color-stroke);
+  outline-offset: 2px;
+}
+
+.font-mono { font-family: "JetBrains Mono", monospace; }
+
+/* ─── Grain overlay ──────────────────────────────────────────────── */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* ─── Scanline ────────────────────────────────────────────────────── */
+@keyframes scanline {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+.scanline {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(to bottom, transparent, var(--scanline-color), transparent);
+  z-index: 9998;
+  pointer-events: none;
+  animation: scanline 8s linear infinite;
+}
+
+/* ─── Glitch effect ──────────────────────────────────────────────── */
+@keyframes glitch-1 {
+  0%, 84%, 100% { opacity: 0; }
+  85% { opacity: 1; clip-path: polygon(0 18%, 100% 18%, 100% 22%, 0 22%); transform: translateX(-4px); }
+  87% { clip-path: polygon(0 52%, 100% 52%, 100% 57%, 0 57%); transform: translateX(4px); }
+  89% { clip-path: polygon(0 8%, 100% 8%, 100% 10%, 0 10%); transform: translateX(-2px); }
+  91% { opacity: 0; }
+}
+@keyframes glitch-2 {
+  0%, 87%, 100% { opacity: 0; }
+  88% { opacity: 1; clip-path: polygon(0 68%, 100% 68%, 100% 74%, 0 74%); transform: translateX(4px); }
+  90% { clip-path: polygon(0 33%, 100% 33%, 100% 38%, 0 38%); transform: translateX(-3px); }
+  92% { clip-path: polygon(0 83%, 100% 83%, 100% 87%, 0 87%); transform: translateX(2px); }
+  94% { opacity: 0; }
+}
+
+.glitch-text { position: relative; }
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  background: transparent;
+  color: var(--color-ink);
+}
+.glitch-text::before { animation: glitch-1 7s infinite; }
+.glitch-text::after  { animation: glitch-2 7s infinite; }
+
+/* ─── Marquee ─────────────────────────────────────────────────────── */
+@keyframes marquee-left {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes marquee-right {
+  0%   { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+.animate-marquee { animation: marquee-left 45s linear infinite; }
+
+/* ─── Glow pulse ──────────────────────────────────────────────────── */
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 0 rgba(0,0,0,0); }
+  50%       { box-shadow: 0 0 28px var(--glow-bg); }
+}
+.glow-pulse { animation: glow-pulse 3s ease-in-out infinite; }
+
+/* ─── Project card ────────────────────────────────────────────────── */
+.project-card {
+  position: relative;
+  transition: border-color 0.3s ease, box-shadow 0.4s ease, background-color 0.3s ease;
+}
+.project-card:hover {
+  border-color: var(--color-stroke);
+  box-shadow: 0 12px 40px -12px rgba(0, 0, 0, 0.35);
+}
+[data-theme="light"] .project-card:hover {
+  box-shadow: 0 12px 40px -12px rgba(0, 0, 0, 0.12);
+}
+.project-card:hover .project-card-img {
+  transform: scale(1.04);
+}
+.project-card-img {
+  will-change: transform;
+}
+
+/* ─── Skill badge ─────────────────────────────────────────────────── */
+.skill-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 0.875rem 1.5rem;
+  border: 1px solid var(--color-line);
+  background-color: var(--color-base);
+  color: var(--color-muted);
+  transition: border-color 0.2s, background-color 0.2s, transform 0.2s, color 0.2s;
+}
+.skill-badge:hover {
+  border-color: var(--color-stroke);
+  background-color: var(--color-card);
+  color: var(--color-ink);
+  transform: translateY(-4px);
+}
+.skill-badge .skill-icon {
+  flex-shrink: 0;
+  color: var(--color-muted);
+  transition: color 0.2s;
+}
+.skill-badge .skill-icon svg {
+  width: 1.35rem;
+  height: 1.35rem;
+  display: block;
+  color: inherit;
+  fill: currentColor;
+}
+.skill-badge:hover .skill-icon {
+  color: var(--color-ink);
+}
+.skill-badge .skill-name {
+  font-size: 0.9375rem;
+  letter-spacing: 0.02em;
+}
+
+/* ─── Section label accent ─────────────────────────────────────────── */
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.section-label::before,
+.section-label::after {
+  content: '';
+  width: 2rem;
+  height: 1px;
+  background-color: var(--color-ghost);
+}
+
+/* ─── Terminal block ──────────────────────────────────────────────── */
+.terminal-block {
+  background-color: var(--color-panel);
+  border: 1px solid var(--color-line);
+  font-family: "JetBrains Mono", monospace;
+  transition: background-color 0.35s ease, border-color 0.35s ease;
+  border-radius: 2px;
+}
+
+/* ─── GitHub Calendar overrides ───────────────────────────────────── */
+.github-calendar-wrapper .react-activity-calendar {
+  overflow: visible;
+}
+.github-calendar-wrapper text {
+  fill: var(--color-ghost) !important;
+  font-family: "JetBrains Mono", monospace !important;
+  font-size: 10px !important;
+}
+.github-calendar-wrapper rect[data-date] {
+  rx: 2;
+  ry: 2;
+}
+/* Legend dots */
+.github-calendar-wrapper [data-testid="legend"] rect {
+  rx: 2;
+  ry: 2;
+}
+
+/* ─── Smooth theme transition for all borders ─────────────────────── */
+*, *::before, *::after {
+  transition-property: background-color, border-color, color;
+  transition-duration: 0.3s;
+  transition-timing-function: ease;
+}
+
+/* Override transition for animated elements (keep their own transitions) */
+.animate-marquee,
+.glitch-text::before,
+.glitch-text::after,
+.scanline,
+canvas {
+  transition: none !important;
+}
