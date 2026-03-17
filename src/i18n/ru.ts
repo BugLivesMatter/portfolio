@@ -82,9 +82,9 @@ const ru = {
           "Система CV реального времени для обнаружения и отслеживания целей в игре. C#, DirectML и ONNX-Runtime для быстрого инференса на Windows.",
       },
       {
-        title: "Система авторизации подписок",
+        title: "Best Python Obfuscator NGL",
         description:
-          "Backend управления лицензиями для desktop-приложения. Python и Flask, JWT, интеграция с оплатой, ролевой доступ и аппаратный отпечаток против шаринга ключей.",
+          "Браузерный обфускатор Python-кода с переименованием идентификаторов, шифрованием строк, вставкой мусорного кода, AES-256 bytecode-режимом и генерацией Windows exe-лаунчера — на React, TypeScript, Vite и Tailwind.",
       },
       {
         title: "RNG Paradice",

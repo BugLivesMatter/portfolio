@@ -82,9 +82,9 @@ const en = {
           "Real-time CV system detecting and tracking game targets. Built with C#, DirectML and ONNX-Runtime for fast inference on Windows.",
       },
       {
-        title: "Subscription Auth System",
+        title: "Best Python Obfuscator NGL",
         description:
-          "License & subscription management backend for a desktop app. Python and Flask, JWT auth, payment integration, RBAC, and hardware fingerprinting against key sharing.",
+          "Browser-based Python obfuscator with identifier renaming, string encryption, junk-code injection, AES-256 bytecode mode, and optional Windows exe launcher — built with React, TypeScript, Vite, and Tailwind.",
       },
       {
         title: "RNG Paradice",

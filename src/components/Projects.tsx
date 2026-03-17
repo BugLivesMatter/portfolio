@@ -34,7 +34,7 @@ function ProjectImage({ num }: { num: number }) {
 const projectMeta: ProjectMeta[] = [
   { tags: ["OpenCV", "Python"] },
   { tags: ["C#", "DirectML", "ONNX-Runtime"], featured: true },
-  { tags: ["Python", "Flask", "PostgreSQL", "REST", "Docker"] },
+  { tags: ["TypeScript", "React", "Vite", "Tailwind", "CryptoJS"], github: "https://github.com/BugLivesMatter/Best-Python-Obfuscator-NGL" },
   { tags: ["Unity", "C#", ".NET", "Mobile"] },
   { tags: ["Python", "PyQt5", "Xray-core", "VLESS"], github: "https://github.com/BugLivesMatter/AnonLine_VPN-VLESS" },
   { tags: ["Python", "Selenium", "PyQt5", "Telegram Bot"], github: "https://github.com/BugLivesMatter/LZT-Market-Monitor" },
